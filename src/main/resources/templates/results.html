@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>View All Phones</title>
+</head>
+<body>
+<table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Model</th>
+                <th>Color</th>
+                <th>Manufacturer</th>
+                <th>Specifications</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="currentPhone : ${phones}">
+                <td th:text="${currentPhone.id}"></td>
+                <td th:text="${currentPhone.model}"></td>
+                <td th:text="${currentPhone.color}"></td>
+                <td>
+                    <span th:if="${currentPhone.specification != null}"
+                          th:text="${currentPhone.specification.manufacturer != null ? currentPhone.specification.manufacturer.name : 'Unknown'}">
+                    </span>
+                    <span th:if="${currentPhone.specification == null}">No Specification</span>
+                </td>
+                <td th:text="${currentPhone.specification != null ? currentPhone.specification.storage + ' ' + currentPhone.specification.ram + ' ' + currentPhone.specification.screenSize : 'No Specification'}"></td>
+                <td><a th:href="@{/editPhone/{id}(id=${currentPhone.id})}">Edit</a></td>
+                <td><a th:href="@{/deletePhone/{id}(id=${currentPhone.id})}">Delete</a></td>
+            </tr>
+        </tbody>
+    </table>
+    <a href="inputPhone">Add a new Phone</a>
+</body>
+</html>
